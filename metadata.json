@@ -1,0 +1,6 @@
+{
+  "name": "FCCL IT Asset & Infrastructure Platform",
+  "description": "Multi-plant IT asset management, real-time device monitoring, stock levels, and supplier tracking platform for FCCL industrial plants.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
