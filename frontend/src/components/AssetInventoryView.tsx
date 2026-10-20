@@ -10,6 +10,7 @@ import {
   Employee,
 } from '../types/inventory.ts';
 import { formatPKR, checkRackCollision, getDeviceNumber, formatDeviceName } from '../utils/inventoryRules.ts';
+import { DeviceStatusDonut } from './DeviceStatusDonut.tsx';
 import {
   Search,
   Filter,
@@ -111,6 +112,12 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
     }
     return true;
   });
+
+  // Scoped counts for donut (based on plant filter but ignoring other filters for accuracy)
+  const scopedForDonut = selectedPlant === 'all' ? assets : assets.filter((a) => a.plantId === selectedPlant);
+  const donutOnline  = scopedForDonut.filter((a) => a.liveStatus === 'Online').length;
+  const donutOffline = scopedForDonut.filter((a) => a.liveStatus === 'Offline').length;
+  const donutTotal   = scopedForDonut.length;
 
   // Export to CSV functionality (Clean: Device Number & Serial Number, no asset tag)
   const handleExportCSV = () => {
@@ -261,6 +268,31 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
             <Plus className="w-3.5 h-3.5" />
             <span>Register Device</span>
           </button>
+        </div>
+      </div>
+
+      {/* ── Device Status Donut Summary ──────────────────────── */}
+      <div className="rounded-2xl bg-[#0f172a] px-6 py-4 flex flex-wrap items-center gap-10">
+        {/* Single combined donut */}
+        <DeviceStatusDonut
+          online={donutOnline}
+          offline={donutOffline}
+          total={donutTotal}
+          size={120}
+        />
+        <div className="flex flex-col gap-2 text-xs text-slate-300">
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span><strong className="text-white">{donutOnline}</strong> online</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
+            <span><strong className="text-white">{donutOffline}</strong> offline</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-slate-600" />
+            <span><strong className="text-white">{donutTotal - donutOnline - donutOffline}</strong> standby</span>
+          </div>
         </div>
       </div>
 

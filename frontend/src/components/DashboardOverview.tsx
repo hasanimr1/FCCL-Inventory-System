@@ -1,6 +1,7 @@
 import React from 'react';
 import { Asset, Plant, StockItem, WorkOrder, ChangeEvent, PlantId } from '../types/inventory.ts';
 import { formatPKR, formatPKT } from '../utils/inventoryRules.ts';
+import { DeviceStatusDonut } from './DeviceStatusDonut.tsx';
 import {
   Activity, AlertTriangle, ArrowRight, Boxes, Building2, CheckCircle2,
   CircleDollarSign, ClipboardList, MonitorDot, Plus, QrCode, ShieldCheck,
@@ -71,6 +72,58 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
             <div className="mt-2 flex items-center justify-between text-xs text-slate-500"><span>{metric.detail}</span><ArrowRight className="h-4 w-4 text-[#00783d] transition group-hover:translate-x-1" /></div>
           </button>;
         })}
+      </section>
+
+      {/* ── Live Device Health ─────────────────────────────── */}
+      <section className="rounded-2xl bg-[#0f172a] px-6 py-5 shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <MonitorDot className="h-4 w-4 text-emerald-400" />
+              <h2 className="font-bold text-white">Live Device Health</h2>
+            </div>
+            <p className="mt-1 text-xs text-slate-400">Real-time connectivity status across monitored devices.</p>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-slate-400">
+            <span className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              {onlineCount} online
+            </span>
+            <span className="text-slate-600">·</span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
+              {offlineCount} offline
+            </span>
+            <span className="text-slate-600">·</span>
+            <span>{scopedAssets.length} total</span>
+          </div>
+        </div>
+
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-10 sm:justify-start">
+          {/* Single combined donut */}
+          <DeviceStatusDonut
+            online={onlineCount}
+            offline={offlineCount}
+            total={scopedAssets.length}
+            size={160}
+          />
+
+          {/* Legend */}
+          <div className="flex flex-col gap-3 text-xs text-slate-300">
+            <div className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span><strong className="text-white">{onlineCount}</strong> online — active check-in</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
+              <span><strong className="text-white">{offlineCount}</strong> offline — missed check-in</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-slate-600" />
+              <span><strong className="text-white">{scopedAssets.length - onlineCount - offlineCount}</strong> standby / unmonitored</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">
