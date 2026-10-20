@@ -729,92 +729,90 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
             </div>
 
             <form onSubmit={handleCreateAssetSubmit} className="space-y-3 text-xs">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Device Number</label>
-                  <input
-                    type="text"
-                    value={`Device #${nextDeviceNum}`}
-                    disabled
-                    className="w-full border border-slate-200 bg-slate-50 text-slate-600 rounded px-2.5 py-1.5 font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Serial Number (Primary ID)</label>
-                  <input
-                    type="text"
-                    value={newSerial}
-                    onChange={(e) => setNewSerial(e.target.value)}
-                    placeholder="e.g. SN-892104"
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono font-semibold"
-                    required
-                  />
-                </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Device Number</label>
+                <input
+                  type="text"
+                  value={`Device #${nextDeviceNum}`}
+                  disabled
+                  className="flex-1 border border-slate-200 bg-slate-50 text-slate-600 rounded px-2.5 py-1.5 font-bold"
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Equipment Category</label>
-                  <select
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value as AssetCategory)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  >
-                    <option value="Server">Server</option>
-                    <option value="Network Switch">Network Switch</option>
-                    <option value="Workstation PC">Workstation PC</option>
-                    <option value="Industrial Laptop">Industrial Laptop</option>
-                    <option value="UPS System">UPS System</option>
-                    <option value="SAN Storage">SAN Storage</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Model Name</label>
-                  <input
-                    type="text"
-                    value={newModel}
-                    onChange={(e) => setNewModel(e.target.value)}
-                    placeholder="e.g. Dell PowerEdge R650"
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                    required
-                  />
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Serial Number (Primary ID)</label>
+                <input
+                  type="text"
+                  value={newSerial}
+                  onChange={(e) => setNewSerial(e.target.value)}
+                  placeholder="e.g. SN-892104"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono font-semibold"
+                  required
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Supplier</label>
-                  <select
-                    value={newVendorId}
-                    onChange={(e) => setNewVendorId(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  >
-                    {vendors.map((v) => (
-                      <option key={v.id} value={v.id}>{v.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Plant Location</label>
-                  <select
-                    value={newPlantId}
-                    onChange={(e) => setNewPlantId(e.target.value as PlantId)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  >
-                    {plants.map((p) => (
-                      <option key={p.id} value={p.id}>{p.name}</option>
-                    ))}
-                  </select>
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Equipment Category</label>
+                <select
+                  value={newCategory}
+                  onChange={(e) => setNewCategory(e.target.value as AssetCategory)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                >
+                  <option value="Server">Server</option>
+                  <option value="Network Switch">Network Switch</option>
+                  <option value="Workstation PC">Workstation PC</option>
+                  <option value="Industrial Laptop">Industrial Laptop</option>
+                  <option value="UPS System">UPS System</option>
+                  <option value="SAN Storage">SAN Storage</option>
+                </select>
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Room / Floor Location</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Model Name</label>
+                <input
+                  type="text"
+                  value={newModel}
+                  onChange={(e) => setNewModel(e.target.value)}
+                  placeholder="e.g. Dell PowerEdge R650"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Supplier</label>
+                <select
+                  value={newVendorId}
+                  onChange={(e) => setNewVendorId(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                >
+                  {vendors.map((v) => (
+                    <option key={v.id} value={v.id}>{v.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Plant Location</label>
+                <select
+                  value={newPlantId}
+                  onChange={(e) => setNewPlantId(e.target.value as PlantId)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                >
+                  {plants.map((p) => (
+                    <option key={p.id} value={p.id}>{p.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Room / Floor Location</label>
                 <input
                   type="text"
                   value={newLocation}
                   onChange={(e) => setNewLocation(e.target.value)}
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
                   required
                 />
               </div>
@@ -822,44 +820,42 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
               {/* Rack Placement (Optional) */}
               <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
                 <span className="font-semibold text-slate-900 block">Rack Mounting (Optional)</span>
-                <div className="grid grid-cols-3 gap-2">
-                  <div>
-                    <label className="block text-[11px] text-slate-600 mb-1">Rack Cabinet</label>
-                    <select
-                      value={newRackId}
-                      onChange={(e) => handleRackChange(e.target.value, newRackUnitStart, newRackUnitHeight, newRackFace)}
-                      className="w-full border border-slate-300 rounded px-2 py-1 bg-white"
-                    >
-                      <option value="">None (Standalone)</option>
-                      {racks.map((r) => (
-                        <option key={r.id} value={r.id}>{r.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-[11px] text-slate-600 mb-1">Start U Position</label>
-                    <input
-                      type="number"
-                      step={0.5}
-                      min={1}
-                      max={42}
-                      value={newRackUnitStart}
-                      onChange={(e) => handleRackChange(newRackId, Number(e.target.value), newRackUnitHeight, newRackFace)}
-                      className="w-full border border-slate-300 rounded px-2 py-1 font-mono bg-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] text-slate-600 mb-1">Height (U)</label>
-                    <input
-                      type="number"
-                      step={0.5}
-                      min={0.5}
-                      max={8}
-                      value={newRackUnitHeight}
-                      onChange={(e) => handleRackChange(newRackId, newRackUnitStart, Number(e.target.value), newRackFace)}
-                      className="w-full border border-slate-300 rounded px-2 py-1 font-mono bg-white"
-                    />
-                  </div>
+                <div className="flex items-center gap-3">
+                  <label className="text-[11px] text-slate-600 w-36 shrink-0">Rack Cabinet</label>
+                  <select
+                    value={newRackId}
+                    onChange={(e) => handleRackChange(e.target.value, newRackUnitStart, newRackUnitHeight, newRackFace)}
+                    className="flex-1 border border-slate-300 rounded px-2 py-1 bg-white"
+                  >
+                    <option value="">None (Standalone)</option>
+                    {racks.map((r) => (
+                      <option key={r.id} value={r.id}>{r.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex items-center gap-3">
+                  <label className="text-[11px] text-slate-600 w-36 shrink-0">Start U Position</label>
+                  <input
+                    type="number"
+                    step={0.5}
+                    min={1}
+                    max={42}
+                    value={newRackUnitStart}
+                    onChange={(e) => handleRackChange(newRackId, Number(e.target.value), newRackUnitHeight, newRackFace)}
+                    className="flex-1 border border-slate-300 rounded px-2 py-1 font-mono bg-white"
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <label className="text-[11px] text-slate-600 w-36 shrink-0">Height (U)</label>
+                  <input
+                    type="number"
+                    step={0.5}
+                    min={0.5}
+                    max={8}
+                    value={newRackUnitHeight}
+                    onChange={(e) => handleRackChange(newRackId, newRackUnitStart, Number(e.target.value), newRackFace)}
+                    className="flex-1 border border-slate-300 rounded px-2 py-1 font-mono bg-white"
+                  />
                 </div>
 
                 {collisionWarning && (
@@ -870,25 +866,24 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Purchase Cost (PKR)</label>
-                  <input
-                    type="number"
-                    value={newCost}
-                    onChange={(e) => setNewCost(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Warranty End Date</label>
-                  <input
-                    type="date"
-                    value={newWarranty}
-                    onChange={(e) => setNewWarranty(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                  />
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Purchase Cost (PKR)</label>
+                <input
+                  type="number"
+                  value={newCost}
+                  onChange={(e) => setNewCost(Number(e.target.value))}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Warranty End Date</label>
+                <input
+                  type="date"
+                  value={newWarranty}
+                  onChange={(e) => setNewWarranty(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                />
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex justify-end gap-2">

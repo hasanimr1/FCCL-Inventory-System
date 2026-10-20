@@ -412,27 +412,25 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
             <p className="text-xs text-slate-600 font-medium">{issueModalItem.name}</p>
 
             <form onSubmit={handleConfirmIssue} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Quantity to Issue (Available: {issueModalItem.currentStock})
-                </label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Quantity to Issue</label>
                 <input
                   type="number"
                   min={1}
                   max={issueModalItem.currentStock}
                   value={issueQuantity}
                   onChange={(e) => setIssueQuantity(Math.max(1, Number(e.target.value)))}
-                  className="w-full border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none focus:ring-1 focus:ring-slate-800"
+                  className="flex-1 border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none focus:ring-1 focus:ring-slate-800"
                   required
                 />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Target Device (By Number &amp; Serial)</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Target Device</label>
                 <select
                   value={issueAssetTag}
                   onChange={(e) => setIssueAssetTag(e.target.value)}
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5 focus:outline-none"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 focus:outline-none"
                 >
                   <option value="">General Maintenance Workshop</option>
                   {assets.map((a) => (
@@ -443,13 +441,13 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
                 </select>
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Reason / Work Order Notes</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Reason / Notes</label>
                 <input
                   type="text"
                   value={issueReason}
                   onChange={(e) => setIssueReason(e.target.value)}
-                  className="w-full border border-slate-300 rounded px-3 py-1.5 focus:outline-none"
+                  className="flex-1 border border-slate-300 rounded px-3 py-1.5 focus:outline-none"
                   placeholder="e.g. Memory upgrade for analytics VM expansion"
                   required
                 />
@@ -495,25 +493,25 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
             <p className="text-xs text-slate-600 font-medium">{restockModalItem.name}</p>
 
             <form onSubmit={handleConfirmRestock} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Restock Units</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Restock Units</label>
                 <input
                   type="number"
                   min={1}
                   value={restockQuantity}
                   onChange={(e) => setRestockQuantity(Math.max(1, Number(e.target.value)))}
-                  className="w-full border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none focus:ring-1 focus:ring-slate-800"
+                  className="flex-1 border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none focus:ring-1 focus:ring-slate-800"
                   required
                 />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Purchase Order (PO) Ref</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">PO Reference</label>
                 <input
                   type="text"
                   value={restockPoNumber}
                   onChange={(e) => setRestockPoNumber(e.target.value)}
-                  className="w-full border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none"
+                  className="flex-1 border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none"
                   required
                 />
               </div>
@@ -566,137 +564,135 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
             </div>
 
             <form onSubmit={handleConfirmAdd} className="space-y-3 text-xs">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Part / Model Number</label>
-                  <input
-                    type="text"
-                    value={newSku}
-                    onChange={(e) => setNewSku(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Category</label>
-                  <select
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  >
-                    <option value="Memory (RAM)">Memory (RAM)</option>
-                    <option value="Storage Disks">Storage Disks</option>
-                    <option value="Networking Transceivers">Networking Transceivers</option>
-                    <option value="Cabling & Patch">Cabling & Patch</option>
-                    <option value="Power Units">Power Units</option>
-                    <option value="UPS Batteries">UPS Batteries</option>
-                    <option value="Network Adapters">Network Adapters</option>
-                  </select>
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Part / Model Number</label>
+                <input
+                  type="text"
+                  value={newSku}
+                  onChange={(e) => setNewSku(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                  required
+                />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Part Description / Model</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Category</label>
+                <select
+                  value={newCategory}
+                  onChange={(e) => setNewCategory(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                >
+                  <option value="Memory (RAM)">Memory (RAM)</option>
+                  <option value="Storage Disks">Storage Disks</option>
+                  <option value="Networking Transceivers">Networking Transceivers</option>
+                  <option value="Cabling & Patch">Cabling & Patch</option>
+                  <option value="Power Units">Power Units</option>
+                  <option value="UPS Batteries">UPS Batteries</option>
+                  <option value="Network Adapters">Network Adapters</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Part Description</label>
                 <input
                   type="text"
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="e.g. Dell 16GB DDR4 ECC RDIMM 2666MHz"
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Plant Allocation</label>
-                  <select
-                    value={newPlantId}
-                    onChange={(e) => setNewPlantId(e.target.value as PlantId)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  >
-                    {plants.map((p) => (
-                      <option key={p.id} value={p.id}>{p.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Assigned Vendor</label>
-                  <select
-                    value={newVendorId}
-                    onChange={(e) => setNewVendorId(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  >
-                    {vendors.map((v) => (
-                      <option key={v.id} value={v.id}>{v.name}</option>
-                    ))}
-                  </select>
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Plant Allocation</label>
+                <select
+                  value={newPlantId}
+                  onChange={(e) => setNewPlantId(e.target.value as PlantId)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                >
+                  {plants.map((p) => (
+                    <option key={p.id} value={p.id}>{p.name}</option>
+                  ))}
+                </select>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Initial Stock</label>
-                  <input
-                    type="number"
-                    min={0}
-                    value={newStock}
-                    onChange={(e) => setNewStock(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Min Threshold</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={newMin}
-                    onChange={(e) => setNewMin(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Reorder Point</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={newReorder}
-                    onChange={(e) => setNewReorder(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                  />
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Assigned Vendor</label>
+                <select
+                  value={newVendorId}
+                  onChange={(e) => setNewVendorId(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                >
+                  {vendors.map((v) => (
+                    <option key={v.id} value={v.id}>{v.name}</option>
+                  ))}
+                </select>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Unit Price (PKR)</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={newPrice}
-                    onChange={(e) => setNewPrice(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Lead Time (Days)</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={newLeadTime}
-                    onChange={(e) => setNewLeadTime(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Shelf Bin</label>
-                  <input
-                    type="text"
-                    value={newShelf}
-                    onChange={(e) => setNewShelf(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  />
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Initial Stock</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={newStock}
+                  onChange={(e) => setNewStock(Number(e.target.value))}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Min Threshold</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={newMin}
+                  onChange={(e) => setNewMin(Number(e.target.value))}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Reorder Point</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={newReorder}
+                  onChange={(e) => setNewReorder(Number(e.target.value))}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Unit Price (PKR)</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={newPrice}
+                  onChange={(e) => setNewPrice(Number(e.target.value))}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Lead Time (Days)</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={newLeadTime}
+                  onChange={(e) => setNewLeadTime(Number(e.target.value))}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Shelf Bin</label>
+                <input
+                  type="text"
+                  value={newShelf}
+                  onChange={(e) => setNewShelf(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                />
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex justify-end gap-2">

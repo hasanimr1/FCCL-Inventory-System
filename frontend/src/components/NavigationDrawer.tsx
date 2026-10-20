@@ -15,6 +15,7 @@ import {
   Building2,
 } from 'lucide-react';
 import { PlantId } from '../types/inventory.ts';
+import fcclLogo from '../Assets/FCCL logo.png';
 
 interface NavigationDrawerProps {
   isOpen: boolean;
@@ -128,12 +129,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           {/* Header */}
           <div className="p-5 border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-emerald-400 shadow-inner">
-                <Layers className="w-5 h-5" />
+              <div className="h-12 w-12 shrink-0">
+                <img src={fcclLogo} alt="Fauji Cement Company Limited" className="h-full w-full object-contain" />
               </div>
               <div>
-                <h2 className="text-sm font-bold text-white tracking-tight">FCCL IT Systems</h2>
-                <p className="text-[11px] text-slate-400 font-mono">Infrastructure Hub</p>
+                <h2 className="text-sm font-bold text-white tracking-tight">FCCL Inventory</h2>
+                <p className="text-[11px] text-slate-400 font-mono">Plant Asset Management</p>
               </div>
             </div>
 

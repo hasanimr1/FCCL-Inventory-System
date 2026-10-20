@@ -3,9 +3,8 @@ import {
   PlantId,
   UserRole,
 } from '../types/inventory.ts';
-import { INITIAL_PLANTS } from '../data/mockInventoryData.ts';
+import { INITIAL_PLANTS } from '../../../backend/data/mockInventoryData.ts';
 import {
-  Layers,
   Menu,
   Building2,
   UserCheck,
@@ -19,6 +18,7 @@ import {
   FileText,
   ChevronRight,
 } from 'lucide-react';
+import fcclLogo from '../Assets/FCCL logo.png';
 
 interface NavigationHeaderProps {
   activeTab: string;
@@ -60,7 +60,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   const activeDrawerSection = drawerSectionsMap[activeTab];
 
   return (
-    <header className="bg-slate-900 border-b border-slate-800 text-slate-100 sticky top-0 z-40 select-none shadow-md">
+    <header className="bg-[#063d2a] border-b border-[#0b6340] text-slate-100 sticky top-0 z-40 select-none shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16">
           {/* Left Zone: Left Drawer Menu Toggle + Logo Branding */}
@@ -72,16 +72,16 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
               title="Open Navigation Hub (Shifted Sections: Racks, Work Orders, Suppliers, Audit)"
               aria-label="Open left drawer menu"
             >
-              <Menu className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <Menu className="w-4 h-4 text-[#a7e3bd] group-hover:scale-110 transition-transform" />
               <span className="text-xs font-semibold tracking-wide hidden sm:inline">Menu</span>
             </button>
 
-            <div className="h-6 w-px bg-slate-800 hidden sm:block" />
+            <div className="h-6 w-px bg-[#0b6340] hidden sm:block" />
 
             {/* Wordmark Logo */}
             <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onTabChange('overview')}>
-              <div className="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-700/60 flex items-center justify-center text-emerald-400 shadow-inner">
-                <Layers className="w-4 h-4" />
+              <div className="h-11 w-11 shrink-0">
+                <img src={fcclLogo} alt="Fauji Cement Company Limited" className="h-full w-full object-contain" />
               </div>
               <div className="flex flex-col">
                 <span className="text-sm sm:text-base font-bold tracking-tight text-white whitespace-nowrap leading-tight">
@@ -109,7 +109,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#9ee6ba]' : 'text-slate-400'}`} />
                   <span>{item.label}</span>
                 </button>
               );
@@ -132,7 +132,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
           <div className="flex items-center gap-2.5 shrink-0">
             {/* Plant Scope Selector */}
             <div className="flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 rounded-lg px-2.5 py-1.5 shadow-sm">
-              <Building2 className="w-3.5 h-3.5 text-emerald-400" />
+              <Building2 className="w-3.5 h-3.5 text-[#9ee6ba]" />
               <select
                 value={selectedPlant}
                 onChange={(e) => onPlantChange(e.target.value as PlantId | 'all')}

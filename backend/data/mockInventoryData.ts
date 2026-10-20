@@ -9,8 +9,8 @@ import {
   Rack,
   AuditFinding,
   AuditLog,
-} from '../types/inventory.ts';
-import { computeRecordHash } from '../utils/inventoryRules.ts';
+} from '../../frontend/src/types/inventory.ts';
+import { computeRecordHash } from '../../frontend/src/utils/inventoryRules.ts';
 
 export const INITIAL_PLANTS: Plant[] = [
   {

@@ -172,62 +172,59 @@ export const PhysicalAuditScannerModal: React.FC<PhysicalAuditScannerModalProps>
 
             {/* Scan form simulation */}
             <form onSubmit={handleExecuteScan} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Scanned Barcode / Serial Number
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-40 shrink-0">
+                  Scanned Barcode / Serial
                 </label>
-                <div className="flex gap-2">
-                  <select
-                    value={selectedTag}
-                    onChange={(e) => {
-                      setSelectedTag(e.target.value);
-                      const a = assets.find((x) => x.assetTag === e.target.value);
-                      if (a) {
-                        setObservedLocation(a.locationRoom);
-                        setObservedStatus(a.status);
-                      }
-                    }}
-                    className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-medium text-xs bg-white"
-                  >
-                    {assets.map((a) => (
-                      <option key={a.id} value={a.assetTag}>
-                        Device #{getDeviceNumber(a, assets)} — {a.model} (SN: {a.serialNumber})
-                      </option>
-                    ))}
-                    <option value="AST-ROGUE-99999">[Test Unregistered Serial Number]</option>
-                  </select>
-                </div>
+                <select
+                  value={selectedTag}
+                  onChange={(e) => {
+                    setSelectedTag(e.target.value);
+                    const a = assets.find((x) => x.assetTag === e.target.value);
+                    if (a) {
+                      setObservedLocation(a.locationRoom);
+                      setObservedStatus(a.status);
+                    }
+                  }}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-medium text-xs bg-white"
+                >
+                  {assets.map((a) => (
+                    <option key={a.id} value={a.assetTag}>
+                      Device #{getDeviceNumber(a, assets)} — {a.model} (SN: {a.serialNumber})
+                    </option>
+                  ))}
+                  <option value="AST-ROGUE-99999">[Test Unregistered Serial Number]</option>
+                </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">
-                    Observed Physical Room
-                  </label>
-                  <input
-                    type="text"
-                    value={observedLocation}
-                    onChange={(e) => setObservedLocation(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 text-xs"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">
-                    Observed Physical Status
-                  </label>
-                  <select
-                    value={observedStatus}
-                    onChange={(e) => setObservedStatus(e.target.value as AssetLifecycleStatus)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 text-xs bg-white"
-                  >
-                    <option value="In Use">In Use</option>
-                    <option value="Spare">Spare</option>
-                    <option value="In Repair">In Repair</option>
-                    <option value="Decommissioned">Decommissioned</option>
-                    <option value="Scrapped">Scrapped</option>
-                  </select>
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-40 shrink-0">
+                  Observed Physical Room
+                </label>
+                <input
+                  type="text"
+                  value={observedLocation}
+                  onChange={(e) => setObservedLocation(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 text-xs"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-40 shrink-0">
+                  Observed Physical Status
+                </label>
+                <select
+                  value={observedStatus}
+                  onChange={(e) => setObservedStatus(e.target.value as AssetLifecycleStatus)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 text-xs bg-white"
+                >
+                  <option value="In Use">In Use</option>
+                  <option value="Spare">Spare</option>
+                  <option value="In Repair">In Repair</option>
+                  <option value="Decommissioned">Decommissioned</option>
+                  <option value="Scrapped">Scrapped</option>
+                </select>
               </div>
 
               <div className="pt-2 flex justify-end gap-2">

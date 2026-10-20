@@ -364,104 +364,102 @@ export const SupplierTrackingView: React.FC<SupplierTrackingViewProps> = ({
             </div>
 
             <form onSubmit={handleCreateVendor} className="space-y-3 text-xs">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Vendor Code</label>
-                  <input
-                    type="text"
-                    value={newCode}
-                    onChange={(e) => setNewCode(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Company / Brand Name</label>
-                  <input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Primary Category</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Vendor Code</label>
                 <input
                   type="text"
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value)}
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5"
+                  value={newCode}
+                  onChange={(e) => setNewCode(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Account Contact Person</label>
-                  <input
-                    type="text"
-                    value={newContact}
-                    onChange={(e) => setNewContact(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Email</label>
-                  <input
-                    type="email"
-                    value={newEmail}
-                    onChange={(e) => setNewEmail(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                    required
-                  />
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Company / Brand Name</label>
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                  required
+                />
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Phone</label>
-                  <input
-                    type="text"
-                    value={newPhone}
-                    onChange={(e) => setNewPhone(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">SLA Hours</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={newSla}
-                    onChange={(e) => setNewSla(Number(e.target.value))}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">24/7 Hotline</label>
-                  <input
-                    type="text"
-                    value={newHotline}
-                    onChange={(e) => setNewHotline(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
-                    required
-                  />
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Primary Category</label>
+                <input
+                  type="text"
+                  value={newCategory}
+                  onChange={(e) => setNewCategory(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                  required
+                />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Depot Office Address</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Account Contact Person</label>
+                <input
+                  type="text"
+                  value={newContact}
+                  onChange={(e) => setNewContact(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Email</label>
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Phone</label>
+                <input
+                  type="text"
+                  value={newPhone}
+                  onChange={(e) => setNewPhone(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">SLA Hours</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={newSla}
+                  onChange={(e) => setNewSla(Number(e.target.value))}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">24/7 Hotline</label>
+                <input
+                  type="text"
+                  value={newHotline}
+                  onChange={(e) => setNewHotline(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                  required
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Depot Office Address</label>
                 <input
                   type="text"
                   value={newAddress}
                   onChange={(e) => setNewAddress(e.target.value)}
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
                   required
                 />
               </div>

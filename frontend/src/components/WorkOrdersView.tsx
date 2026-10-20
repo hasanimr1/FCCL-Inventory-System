@@ -247,24 +247,24 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
             </div>
 
             <form onSubmit={handleCreateOrder} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Work Order Title</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Work Order Title</label>
                 <input
                   type="text"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   placeholder="e.g. SCADA Server RAM Upgrade"
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
                   required
                 />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Target Device</label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Target Device</label>
                 <select
                   value={newAssetId}
                   onChange={(e) => setNewAssetId(e.target.value)}
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
                 >
                   {assets.map((a) => (
                     <option key={a.id} value={a.id}>
@@ -274,53 +274,50 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Technician</label>
-                  <input
-                    type="text"
-                    value={newTech}
-                    onChange={(e) => setNewTech(e.target.value)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-slate-700 font-medium mb-1">Priority</label>
-                  <select
-                    value={newPriority}
-                    onChange={(e) => setNewPriority(e.target.value as WorkOrderPriority)}
-                    className="w-full border border-slate-300 rounded px-2.5 py-1.5"
-                  >
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                    <option value="Critical">Critical</option>
-                  </select>
-                </div>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Technician</label>
+                <input
+                  type="text"
+                  value={newTech}
+                  onChange={(e) => setNewTech(e.target.value)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                  required
+                />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">
-                  Authorized Hardware Mutation (Auto-Correlation Pattern)
-                </label>
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Priority</label>
+                <select
+                  value={newPriority}
+                  onChange={(e) => setNewPriority(e.target.value as WorkOrderPriority)}
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
+                >
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Authorized Hardware Change</label>
                 <input
                   type="text"
                   value={newAuthChange}
                   onChange={(e) => setNewAuthChange(e.target.value)}
                   placeholder="e.g. RAM Upgrade from 16GB to 32GB"
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5 font-mono"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
                 />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Maintenance Instructions</label>
+              <div className="flex items-start gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0 pt-1">Maintenance Instructions</label>
                 <textarea
                   rows={2}
                   value={newNotes}
                   onChange={(e) => setNewNotes(e.target.value)}
                   placeholder="Special instructions or safety procedures..."
-                  className="w-full border border-slate-300 rounded px-2.5 py-1.5"
+                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
                 />
               </div>
 

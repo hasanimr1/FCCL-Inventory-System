@@ -23,7 +23,7 @@ import {
   INITIAL_CHANGE_EVENTS,
   INITIAL_AUDIT_FINDINGS,
   INITIAL_AUDIT_LOGS,
-} from './data/mockInventoryData.ts';
+} from '../../backend/data/mockInventoryData.ts';
 import {
   calculateStockHealth,
   evaluateDeviceLiveStatus,
@@ -558,6 +558,7 @@ export default function App() {
             workOrders={workOrders}
             changeEvents={changeEvents}
             selectedPlant={selectedPlant}
+            onPlantChange={setSelectedPlant}
             onNavigate={setActiveTab}
             onOpenAuditScanner={() => setIsAuditScannerOpen(true)}
             onOpenNewAssetModal={() => setActiveTab('assets')}
