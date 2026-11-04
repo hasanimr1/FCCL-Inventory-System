@@ -1,0 +1,234 @@
+{
+  "main": {
+    "id": "e8a83ec1f41224f5",
+    "type": "split",
+    "children": [
+      {
+        "id": "7c5f9cf120bad8de",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "57527f989fae9bcf",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "63e334f8a47cd20f",
+    "type": "split",
+    "children": [
+      {
+        "id": "954f349b641a6ca2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f0e77beef1f4100d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "6808f3aacdaf6ae6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "0d424bdae081a615",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "072f2e572dded4d0",
+    "type": "split",
+    "children": [
+      {
+        "id": "8ad3fc8d2b0a8321",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "09719e9674d5a137",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "bf8f563578d47831",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "8a97f7c0c9a11619",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "b37a23bae484634f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "585f45c7de22e9d0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "3be978f03fc94c19",
+            "type": "leaf",
+            "state": {
+              "type": "copilot-agent-chat-view",
+              "state": {},
+              "icon": "copilot-agent",
+              "title": "Copilot Agent Chat"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 404.699951171875
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "copilot:Open Copilot Agent Chat": false
+    }
+  },
+  "active": "57527f989fae9bcf",
+  "lastOpenFiles": [
+    "copilot/copilot-conversations/agent__what_can_you_tell_me_about_the_current_vault@20261104_151151.md",
+    "Docs/Obsidian Linking Guide.md",
+    "Docs/FCCL_Project_Markdown_Docs/Asset_Management_Requirements_Specification.md",
+    "copilot/copilot-conversations",
+    "copilot/skills/json-canvas/SKILL.md",
+    "copilot/skills/json-canvas/LICENSE",
+    "copilot/skills/json-canvas/references/EXAMPLES.md",
+    "copilot/skills/json-canvas/references",
+    "copilot/skills/json-canvas",
+    "copilot/skills/obsidian-bases/SKILL.md",
+    "copilot/skills/obsidian-bases/LICENSE",
+    "copilot/skills/obsidian-bases/references/EXAMPLES.md",
+    "copilot/skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md",
+    "copilot/skills/obsidian-bases/references",
+    "copilot/skills/obsidian-bases",
+    "copilot/skills/obsidian-markdown/SKILL.md",
+    "copilot/skills/obsidian-markdown/LICENSE",
+    "copilot/skills/obsidian-markdown/references/PROPERTIES.md",
+    "copilot/skills/obsidian-markdown/references/EMBEDS.md",
+    "copilot/skills/obsidian-markdown/references/CALLOUTS.md",
+    "copilot/skills/obsidian-markdown/references",
+    "copilot/skills/obsidian-markdown",
+    "copilot/skills/copilot-fetch-x/SKILL.md",
+    "copilot/skills/copilot-youtube-transcript/SKILL.md",
+    "Docs/FCCL_Project_Markdown_Docs/README.md",
+    "Docs/FCCL_Project_Markdown_Docs/project_summary.md",
+    "Docs/FCCL_Project_Markdown_Docs/Inital Plan.md",
+    "Docs/project_summary.md",
+    "Docs/Asset_Management_Requirements_Specification.md",
+    "Docs/FCCL_Project_Markdown_Docs/05-data-model-and-business-rules.md",
+    "Docs/FCCL_Project_Markdown_Docs/08-decisions-and-open-issues.md",
+    "Docs/FCCL_Project_Markdown_Docs/07-backup-deployment-and-recovery.md",
+    "Docs/FCCL_Project_Markdown_Docs/06-workflows-and-diagrams.md",
+    "Docs/FCCL_Project_Markdown_Docs/04-core-modules.md",
+    "Docs/FCCL_Project_Markdown_Docs/03-roles-and-access-control.md",
+    "Docs/FCCL_Project_Markdown_Docs/02-architecture-and-technology.md"
+  ]
+}

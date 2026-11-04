@@ -1,0 +1,8 @@
+{
+  "userIgnoreFilters": [
+    "frontend/node_modules/",
+    "frontend/dist/assets/",
+    "backend/data/",
+    "frontend/dist/"
+  ]
+}
