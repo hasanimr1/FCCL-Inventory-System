@@ -17,6 +17,7 @@ import {
   Download,
   Upload,
   Plus,
+  Minus,
   Eye,
   QrCode,
   AlertTriangle,
@@ -71,12 +72,24 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
 
   // Form states for new device
   const nextDeviceNum = assets.length + 1;
-  const [newSerial, setNewSerial] = useState(`SN-${Math.floor(Math.random() * 899999 + 100000)}`);
+  const [bulkQuantity, setBulkQuantity] = useState(1);
+  const [serialNumbers, setSerialNumbers] = useState<string[]>([`SN-${Math.floor(Math.random() * 899999 + 100000)}`]);
   const [newModel, setNewModel] = useState('');
   const [newCategory, setNewCategory] = useState<AssetCategory>('Server');
   const [newVendorId, setNewVendorId] = useState(vendors[0]?.id || '');
   const [newPlantId, setNewPlantId] = useState<PlantId>(selectedPlant === 'all' ? 'plant-1' : selectedPlant);
-  const [newLocation, setNewLocation] = useState('Datacenter Room 101');
+  const [newDepartment, setNewDepartment] = useState('IT Department');
+  const [knownDepartments, setKnownDepartments] = useState<string[]>([
+    'IT Department',
+    'Finance',
+    'HR',
+    'Operations',
+    'Procurement',
+    'Plant Management',
+    'Quality Assurance',
+    'Security',
+    'Administration',
+  ]);
   const [newRackId, setNewRackId] = useState<string>('');
   const [newRackUnitStart, setNewRackUnitStart] = useState<number>(1);
   const [newRackUnitHeight, setNewRackUnitHeight] = useState<number>(2);
@@ -93,6 +106,33 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
   const [customOs, setCustomOs] = useState('Red Hat Enterprise Linux 9');
   const [customIp, setCustomIp] = useState('10.14.10.');
   const [customMac, setCustomMac] = useState('00:15:5D:');
+
+  // Bulk quantity helpers
+  const handleIncrementQuantity = () => {
+    const newQty = Math.min(50, bulkQuantity + 1);
+    setBulkQuantity(newQty);
+    setSerialNumbers((prev) => {
+      const updated = [...prev];
+      while (updated.length < newQty) {
+        updated.push(`SN-${Math.floor(Math.random() * 899999 + 100000)}`);
+      }
+      return updated;
+    });
+  };
+
+  const handleDecrementQuantity = () => {
+    const newQty = Math.max(1, bulkQuantity - 1);
+    setBulkQuantity(newQty);
+    setSerialNumbers((prev) => prev.slice(0, newQty));
+  };
+
+  const handleSerialChange = (index: number, value: string) => {
+    setSerialNumbers((prev) => {
+      const updated = [...prev];
+      updated[index] = value;
+      return updated;
+    });
+  };
 
   // Filter assets
   const filteredAssets = assets.filter((asset) => {
@@ -194,36 +234,52 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
       return;
     }
 
-    onAddAsset({
-      deviceNumber: nextDeviceNum,
-      assetTag: `AST-DEV-${String(nextDeviceNum).padStart(4, '0')}`,
-      serialNumber: newSerial,
-      model: newModel,
-      category: newCategory,
-      vendorId: newVendorId,
-      plantId: newPlantId,
-      locationRoom: newLocation,
-      rackId: newRackId || undefined,
-      rackUnitStart: newRackId ? Number(newRackUnitStart) : undefined,
-      rackUnitHeight: newRackId ? Number(newRackUnitHeight) : undefined,
-      rackFace: newRackFace,
-      status: 'In Use',
-      purchaseDate: new Date().toISOString().split('T')[0],
-      warrantyEnd: newWarranty,
-      costPKR: Number(newCost),
-      monitoringEnabled: newMonitoring,
-      receiptConfirmed: true,
-      customSpecs: {
-        cpu: customCpu,
-        ramGb: Number(customRam),
-        storageGb: Number(customStorage),
-        os: customOs,
-        ipAddress: customIp,
-        macAddress: customMac,
-      },
-    });
+    // Create one asset per serial number in the batch
+    for (let i = 0; i < bulkQuantity; i++) {
+      const devNum = nextDeviceNum + i;
+      onAddAsset({
+        deviceNumber: devNum,
+        assetTag: `AST-DEV-${String(devNum).padStart(4, '0')}`,
+        serialNumber: serialNumbers[i] || `SN-${Math.floor(Math.random() * 899999 + 100000)}`,
+        model: newModel,
+        category: newCategory,
+        vendorId: newVendorId,
+        plantId: newPlantId,
+        locationRoom: newDepartment,
+        rackId: newRackId || undefined,
+        rackUnitStart: newRackId ? Number(newRackUnitStart) : undefined,
+        rackUnitHeight: newRackId ? Number(newRackUnitHeight) : undefined,
+        rackFace: newRackFace,
+        status: 'In Use',
+        purchaseDate: new Date().toISOString().split('T')[0],
+        warrantyEnd: newWarranty,
+        costPKR: Number(newCost),
+        monitoringEnabled: newMonitoring,
+        receiptConfirmed: true,
+        customSpecs: {
+          cpu: customCpu,
+          ramGb: Number(customRam),
+          storageGb: Number(customStorage),
+          os: customOs,
+          ipAddress: customIp,
+          macAddress: customMac,
+        },
+      });
+    }
+
+    // Register department in the dropdown if it's genuinely new (case-insensitive)
+    const trimmedDept = newDepartment.trim();
+    if (trimmedDept) {
+      setKnownDepartments((prev) => {
+        const alreadyKnown = prev.some((d) => d.toLowerCase() === trimmedDept.toLowerCase());
+        return alreadyKnown ? prev : [...prev, trimmedDept];
+      });
+    }
 
     setIsAddModalOpen(false);
+    // Reset bulk state
+    setBulkQuantity(1);
+    setSerialNumbers([`SN-${Math.floor(Math.random() * 899999 + 100000)}`]);
   };
 
   return (
@@ -364,7 +420,7 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
                 <th className="py-3 px-4">Device &amp; Status</th>
                 <th className="py-3 px-4">Serial Number</th>
                 <th className="py-3 px-4">Model &amp; Category</th>
-                <th className="py-3 px-4">Plant &amp; Location</th>
+                <th className="py-3 px-4">Plant &amp; Department</th>
                 <th className="py-3 px-4">Rack Position</th>
                 <th className="py-3 px-4">Lifecycle</th>
                 <th className="py-3 px-4">Assigned Custody</th>
@@ -434,7 +490,7 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
                         <div className="text-[11px] text-slate-500">{asset.category}</div>
                       </td>
 
-                      {/* Plant & Location Room */}
+                      {/* Plant & Department */}
                       <td className="py-3.5 px-4 text-slate-700">
                         <div className="font-medium text-slate-900">{plant?.name || asset.plantId}</div>
                         <div className="text-[11px] text-slate-500">{asset.locationRoom}</div>
@@ -555,7 +611,7 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
             {/* General & Location Information */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Plant Allocation</span>
+                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Plant & Department</span>
                 <span className="font-semibold text-slate-800">{inspectAsset.plantId}</span>
                 <span className="text-[11px] text-slate-500 block">{inspectAsset.locationRoom}</span>
               </div>
@@ -747,9 +803,12 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
           <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-xl w-full p-5 space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between border-b border-slate-100 pb-3">
               <div>
-                <h3 className="text-sm font-bold text-slate-900">Register New Device</h3>
+                <h3 className="text-sm font-bold text-slate-900">Register New Device{bulkQuantity > 1 ? 's' : ''}</h3>
                 <span className="text-xs text-slate-500">
-                  Assigned Number: <strong className="text-slate-900 font-bold">Device #{nextDeviceNum}</strong>
+                  {bulkQuantity === 1
+                    ? <>Assigned Number: <strong className="text-slate-900 font-bold">Device #{nextDeviceNum}</strong></>
+                    : <>Assigned Numbers: <strong className="text-slate-900 font-bold">Device #{nextDeviceNum} — #{nextDeviceNum + bulkQuantity - 1}</strong></>
+                  }
                 </span>
               </div>
               <button
@@ -762,26 +821,53 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
 
             <form onSubmit={handleCreateAssetSubmit} className="space-y-3 text-xs">
 
+              {/* Quantity Counter with +/- */}
               <div className="flex items-center gap-3">
-                <label className="text-slate-700 font-medium w-36 shrink-0">Device Number</label>
-                <input
-                  type="text"
-                  value={`Device #${nextDeviceNum}`}
-                  disabled
-                  className="flex-1 border border-slate-200 bg-slate-50 text-slate-600 rounded px-2.5 py-1.5 font-bold"
-                />
+                <label className="text-slate-700 font-medium w-36 shrink-0">Quantity</label>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleDecrementQuantity}
+                    disabled={bulkQuantity <= 1}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors font-bold text-base"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <span className="w-12 text-center font-mono font-bold text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-lg py-1.5">
+                    {bulkQuantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleIncrementQuantity}
+                    disabled={bulkQuantity >= 50}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors font-bold text-base"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
+                  <span className="text-[11px] text-slate-400 ml-1">
+                    {bulkQuantity === 1 ? '1 device' : `${bulkQuantity} devices`}
+                  </span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <label className="text-slate-700 font-medium w-36 shrink-0">Serial Number (Primary ID)</label>
-                <input
-                  type="text"
-                  value={newSerial}
-                  onChange={(e) => setNewSerial(e.target.value)}
-                  placeholder="e.g. SN-892104"
-                  className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono font-semibold"
-                  required
-                />
+              {/* Dynamic Serial Number Fields */}
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+                <span className="font-semibold text-slate-900 block">Serial Numbers <span className="font-normal text-slate-400">(unique per device)</span></span>
+                {serialNumbers.map((sn, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <label className="text-[11px] text-slate-600 w-36 shrink-0 font-medium">
+                      Device #{nextDeviceNum + idx} — Serial
+                    </label>
+                    <input
+                      type="text"
+                      value={sn}
+                      onChange={(e) => handleSerialChange(idx, e.target.value)}
+                      placeholder={`e.g. SN-${100000 + idx}`}
+                      className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono font-semibold bg-white"
+                      required
+                    />
+                  </div>
+                ))}
               </div>
 
               <div className="flex items-center gap-3">
@@ -839,14 +925,26 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
               </div>
 
               <div className="flex items-center gap-3">
-                <label className="text-slate-700 font-medium w-36 shrink-0">Room / Floor Location</label>
+                <label className="text-slate-700 font-medium w-36 shrink-0">Department Name</label>
                 <input
                   type="text"
-                  value={newLocation}
-                  onChange={(e) => setNewLocation(e.target.value)}
+                  list="dept-suggestions"
+                  value={newDepartment}
+                  onChange={(e) => setNewDepartment(e.target.value)}
+                  placeholder="e.g. IT Department, Finance, HR"
                   className="flex-1 border border-slate-300 rounded px-2.5 py-1.5"
                   required
                 />
+                <datalist id="dept-suggestions">
+                  {knownDepartments
+                    .filter((d) =>
+                      d.toLowerCase().includes(newDepartment.toLowerCase().trim()) ||
+                      newDepartment.trim() === ''
+                    )
+                    .map((d) => (
+                      <option key={d} value={d} />
+                    ))}
+                </datalist>
               </div>
 
               {/* Rack Placement (Optional) */}
@@ -899,7 +997,7 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
               </div>
 
               <div className="flex items-center gap-3">
-                <label className="text-slate-700 font-medium w-36 shrink-0">Purchase Cost (PKR)</label>
+                <label className="text-slate-700 font-medium w-36 shrink-0">Unit Cost (PKR)</label>
                 <input
                   type="number"
                   value={newCost}
@@ -907,6 +1005,18 @@ export const AssetInventoryView: React.FC<AssetInventoryViewProps> = ({
                   className="flex-1 border border-slate-300 rounded px-2.5 py-1.5 font-mono"
                 />
               </div>
+
+              {/* Total Cost Summary (visible when bulk qty > 1) */}
+              {bulkQuantity > 1 && (
+                <div className="p-2.5 rounded bg-slate-50 border border-slate-200 text-xs">
+                  <div className="flex justify-between text-slate-600">
+                    <span>Unit Cost × {bulkQuantity} devices</span>
+                    <span className="font-mono font-bold text-slate-900">
+                      {formatPKR(newCost * bulkQuantity)}
+                    </span>
+                  </div>
+                </div>
+              )}
 
               <div className="flex items-center gap-3">
                 <label className="text-slate-700 font-medium w-36 shrink-0">Warranty End Date</label>

@@ -100,7 +100,11 @@
   "agentMode": {
     "byok": {},
     "activeBackend": "opencode",
-    "backends": {},
+    "backends": {
+      "opencode": {
+        "defaultMode": "default"
+      }
+    },
     "debugFullFrames": true,
     "offerFeedbackCards": true,
     "notificationSound": true,

@@ -293,12 +293,13 @@ export default function App() {
   };
 
   // Store Officer: Restock Item
-  const handleRestockItem = (stockId: string, quantity: number, poNumber: string) => {
+  const handleRestockItem = (stockId: string, quantity: number, poNumber: string, newMinThreshold?: number) => {
     const item = stockItems.find((s) => s.id === stockId);
     if (!item) return;
 
     const newStock = item.currentStock + quantity;
-    const newStatus = calculateStockHealth(newStock, item.minThreshold, item.reorderPoint);
+    const updatedThreshold = newMinThreshold !== undefined ? newMinThreshold : item.minThreshold;
+    const newStatus = calculateStockHealth(newStock, updatedThreshold, item.reorderPoint);
 
     setStockItems((prev) =>
       prev.map((s) =>
@@ -306,6 +307,7 @@ export default function App() {
           ? {
               ...s,
               currentStock: newStock,
+              minThreshold: updatedThreshold,
               status: newStatus,
               lastRestocked: new Date().toISOString().split('T')[0],
             }
@@ -319,7 +321,7 @@ export default function App() {
       'Received Stock Replenishment',
       'StockItem',
       item.sku,
-      `Restocked +${quantity} units via ${poNumber}. New stock: ${newStock}.`
+      `Restocked +${quantity} units via ${poNumber}. New stock: ${newStock}.${updatedThreshold !== item.minThreshold ? ` Min threshold updated: ${item.minThreshold} → ${updatedThreshold}.` : ''}`
     );
   };
 

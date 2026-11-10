@@ -11,10 +11,14 @@
             "id": "57527f989fae9bcf",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Docs/Project Map.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Project Map"
             }
           }
         ]
@@ -194,6 +198,14 @@
   },
   "active": "57527f989fae9bcf",
   "lastOpenFiles": [
+    "Docs/FCCL_Project_Markdown_Docs/project_summary.md",
+    "Docs/Project Map.md",
+    "frontend/dist/index.html",
+    "frontend/dist/assets/index-mgMZULyI.css",
+    "frontend/dist/assets/index-BTkrbkVj.js",
+    "frontend/dist/assets/FCCL logo-DQdKTkKA.png",
+    "frontend/dist/assets",
+    "Docs/FCCL_Project_Markdown_Docs/07-backup-deployment-and-recovery.md",
     "copilot/copilot-conversations/agent__what_can_you_tell_me_about_the_current_vault@20261104_151151.md",
     "Docs/Obsidian Linking Guide.md",
     "Docs/FCCL_Project_Markdown_Docs/Asset_Management_Requirements_Specification.md",
@@ -208,27 +220,20 @@
     "copilot/skills/obsidian-bases/references/EXAMPLES.md",
     "copilot/skills/obsidian-bases/references/FUNCTIONS_REFERENCE.md",
     "copilot/skills/obsidian-bases/references",
-    "copilot/skills/obsidian-bases",
     "copilot/skills/obsidian-markdown/SKILL.md",
-    "copilot/skills/obsidian-markdown/LICENSE",
     "copilot/skills/obsidian-markdown/references/PROPERTIES.md",
     "copilot/skills/obsidian-markdown/references/EMBEDS.md",
     "copilot/skills/obsidian-markdown/references/CALLOUTS.md",
-    "copilot/skills/obsidian-markdown/references",
-    "copilot/skills/obsidian-markdown",
     "copilot/skills/copilot-fetch-x/SKILL.md",
     "copilot/skills/copilot-youtube-transcript/SKILL.md",
     "Docs/FCCL_Project_Markdown_Docs/README.md",
-    "Docs/FCCL_Project_Markdown_Docs/project_summary.md",
     "Docs/FCCL_Project_Markdown_Docs/Inital Plan.md",
     "Docs/project_summary.md",
     "Docs/Asset_Management_Requirements_Specification.md",
     "Docs/FCCL_Project_Markdown_Docs/05-data-model-and-business-rules.md",
     "Docs/FCCL_Project_Markdown_Docs/08-decisions-and-open-issues.md",
-    "Docs/FCCL_Project_Markdown_Docs/07-backup-deployment-and-recovery.md",
     "Docs/FCCL_Project_Markdown_Docs/06-workflows-and-diagrams.md",
     "Docs/FCCL_Project_Markdown_Docs/04-core-modules.md",
-    "Docs/FCCL_Project_Markdown_Docs/03-roles-and-access-control.md",
-    "Docs/FCCL_Project_Markdown_Docs/02-architecture-and-technology.md"
+    "Docs/FCCL_Project_Markdown_Docs/03-roles-and-access-control.md"
   ]
 }

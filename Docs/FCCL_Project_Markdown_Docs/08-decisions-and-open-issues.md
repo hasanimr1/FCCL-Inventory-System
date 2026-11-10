@@ -1,5 +1,7 @@
 # Decisions, Open Issues and Project History
 
+> For a dated comparison of these decisions against what the prototype actually implements — including the FR-024 misquote that affects the audit-access decision — see [[Project Map]].
+
 ## 1. Current decisions
 
 | Area | Current direction | Status |

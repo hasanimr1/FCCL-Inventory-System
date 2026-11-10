@@ -6,7 +6,8 @@ sessionId: "ses_e59f5bb54ffe1iQeoqbSK0kAst"
 tags:
   - copilot-conversation
 topic: "Vault overview inquiry"
-usage: '{"usedTokens":78152,"contextWindow":200000,"updatedAt":1793788009853}'
+usage: '{"usedTokens":79336,"contextWindow":200000,"updatedAt":1793950783311}'
+lastAccessedAt: 1793949328630
 ---
 
 **user**: what can you tell me about the current vault
@@ -175,3 +176,123 @@ I also fixed one stale claim in [[project_summary]]: it cited a "PostgreSQL RLS 
 
 I left the many `file:///c:/Users/...` links inside [[project_summary]]'s tables alone; they're machine-specific and could be mechanically rewritten to wikilinks if you want.
 [Timestamp: 2026/11/04 15:16:43]
+
+**user**: You do have the knowledge base of the whole project right?
+[Timestamp: 2026/11/06 12:15:53]
+
+**ai**: Not automatically — and I want to be precise about that, because it matters for how much you should trust my answers.
+
+## What I actually have
+
+There's no persistent memory between chats. Everything I know right now is what I read in *this* conversation, and a new session starts blank. The vault is the durable memory; I'm just a reader of it.
+
+Here's the honest coverage:
+
+| Area | Depth |
+|---|---|
+| [[README]] + notes 01–08 | Read in full |
+| [[project_summary]] | Read in full |
+| [[Inital Plan]] | Read in full |
+| [[Asset_Management_Requirements_Specification]] | **Headings + first 30 lines only** — not the 823 lines of body |
+| Frontend file inventory, `package.json`, git state | Read |
+| `types/inventory.ts`, `inventoryRules.ts` | Seen indirectly through [[project_summary]] and a couple of greps — **not read line by line** |
+| The 8 view components (~180 KB) | **Not read at all** — only their sizes and descriptions |
+| `backend/data/mockInventoryData.ts` | Only its exported constant names |
+| `.obsidian`, `copilot/`, `.opencode/` | Settings and file listing only |
+
+So I have the *documented* project well, the *implemented* project only at the level of structure and summary. I could not, right now, tell you what `AssetInventoryView.tsx` actually does at line 400, or quote FR-024 verbatim.
+
+## Why that's mostly fine
+
+The docs pack is unusually good — it already states the current stack, the four roles, the four modules, what's superseded and what's still open. For design and planning questions, that's the right source anyway, and it's now cross-linked so a fresh session can rebuild context by reading [[README]] → [[01-project-overview]] → [[08-decisions-and-open-issues]].
+
+## Where it would bite
+
+- Questions about **why the code does something specific** — I'd be inferring from summaries.
+- Questions about **requirements details** beyond the headings — the spec body is unread.
+- Anything decided **outside these notes**, in a conversation I wasn't part of.
+
+If you want me genuinely grounded in the whole thing, say the word and I'll do a full read pass — the requirements spec end to end plus the eight components — and write the findings into a `project_map` note so the knowledge lives in the vault rather than in one chat. That's the version that survives closing the window.
+[Timestamp: 2026/11/06 12:15:53]
+
+**user**: It is a good idea but before that I have a questions
+Can you read or understand code
+[Timestamp: 2026/11/06 12:25:43]
+
+**ai**: Yes — reading and reasoning about code is one of the things I do best. But "read" and "understand" deserve separating, so here's the honest version.
+
+## What I can do
+
+- **Read it as text.** TypeScript, C#, SQL, config, whatever. I see it line by line, with line numbers.
+- **Trace behaviour.** Follow a handler through state updates, spot where an invariant breaks, tell you what a component renders given certain props.
+- **Find things structurally.** `glob` and `grep` let me locate every caller of a function, every place a type is used, every file that imports a module.
+- **Write and change it**, with a diff you can review.
+- **Run it.** I have a shell here — `npm run lint` (`tsc --noEmit`), `npm run build`, `node --test`, `git diff`. So I don't have to *guess* whether a change compiles.
+- **Look at a running UI** through the browser-automation skill — console errors, failed requests, a screenshot.
+
+## What I can't do
+
+- **Execute code in my head and be certain.** I reason about logic, but "this will definitely work" comes from running it, not from reading it.
+- **Hold an entire 180 KB frontend in working memory at once.** I read selectively and re-read as needed. That's why a written map in the vault beats my recall.
+- **Know runtime state** — what's in memory at 3pm, what the DB actually contains.
+- **Judge visual quality** without rendering the page.
+
+## Evidence from this session
+
+The code-reading conclusions I already gave you came from reading, not from the docs:
+
+- `LiveMonitoringBoard.tsx` is imported by nothing — found by grepping its name across `frontend/src`, which returned only its own definition.
+- `inventoryRules.test.ts` uses `node:test`, yet `package.json` has no test script and no test runner dependency — so the tests exist but nothing invokes them.
+- `types/inventory.ts` still declares six roles while the docs specify four.
+- `@google/genai`, `express` and `dotenv` are dependencies with no server code to use them, and `.env.example` still asks for a Gemini key — leftovers from the AI Studio origin.
+
+None of that is in your docs; it came from reading the actual files.
+
+## The caveat for the full pass
+
+Right now I know the code's *shape*, not its *contents* — I haven't read the component bodies. So if you ask "why does the rack visualizer place a 2U device one slot too high?", I'd have to go read `RackVisualizerView.tsx` and `checkRackCollision` first. That's fine, it just takes a moment.
+
+Want me to start the full pass now? I'd do it in this order: requirements spec → `types` + `inventoryRules` (the core logic) → the eight views → then write `project_map` with what's real, what's mock, and where the docs and code disagree. And I'd run the type checker and tests along the way so the map states facts rather than impressions.
+[Timestamp: 2026/11/06 12:25:43]
+
+**user**: Go ahead, list everything (the good, the bad) all merits and flaws, and shape the document as if it will change with time as more things are added with time since the project is still in it's documentation phase
+[Timestamp: 2026/11/06 12:30:42]
+
+**ai**: I'll do a real pass: read the code and the spec, run the toolchain, then write the living document.
+
+Now I'll write the living document.
+
+Done. I read the full requirements spec, all 17 frontend source files, ran the toolchain, and drove the running app in a headless browser to check the claims instead of trusting the code alone.
+
+**Created:** [[Project Map]] — 355 lines, structured to be maintained rather than rewritten.
+
+## What it contains
+
+| Section | Purpose |
+|---|---|
+| §0 Maintenance rules | How to update it without it rotting (never rewrite a finding; evidence per claim; re-run before re-dating) |
+| §1 Snapshot | Dated facts: HEAD, build size, test count, what's absent |
+| §2 What exists | Screens vs. logic vs. mocks |
+| §3 Merits | Documentation, code, process |
+| §4 Flaws | 12 doc findings (D-01…), 38 code findings (C-01…), 8 delivery gaps (P-01…) |
+| §5 Drift register | 15 rows of docs ↔ spec ↔ code disagreement |
+| §6 FR-024 case study | The clearest example of why the register exists |
+| §7–10 | Risk register, blocking decisions, metrics + commands, ordered actions |
+| §11 Changelog | Dated entries, newest first |
+
+## The findings that matter most
+
+**The pack misquotes its own source.** FR-024 says *"Everyone shall search, view and export the audit trail"* (`spec:293`). Notes 03, 04, 05, 06 and 08 all assert it restricts access to System Admin and call it an "Important conflict." The spec's Appendix B also gives Auditor `V` and Employee `—`. So the pack's position is supported by neither passage — and the code gates nothing at all. Four artefacts, four answers.
+
+**The spec contradicts itself in three more places** the pack never flags: MySQL in NFR-003, "times stored in PKT" in NFR-006 (marked *Confirmed*, against the UTC decision), and 20 image references to a `media/` folder that doesn't exist.
+
+**The prototype is honest about nothing.** No API, no persistence, zero `fetch` calls. Role switching changes a label only; audit entries are attributed to five hard-coded FCCL emails regardless of role. The "cryptographic" chain is FNV-1a over four fields, so editing `changesSummary` or `actor` is undetectable. CSV import is an `alert()`. The QR code is a fixed SVG. Rack A01 displays 11,010 W against an 8,000 W budget as "100%".
+
+**Verified, not assumed:** `tsc` and `build` exit 0; 8/8 tests pass but no npm script runs them; the scanner modal exposes no `role="dialog"`; 48U racks exist while the add-asset form hard-codes 42U. I also checked one suspected crash (hooks after an early `return null`) in the browser — it did **not** crash, so the note records it as fragile rather than broken.
+
+**Also changed:**
+- `README.md` — new "Project map" section marking it internal, not part of the FCCL pack.
+- `08-decisions-and-open-issues.md` — one line at the top pointing to the map.
+
+Nothing is committed. The map is written so the next person updates rows and appends a changelog line, rather than starting over.
+[Timestamp: 2026/11/06 12:30:42]

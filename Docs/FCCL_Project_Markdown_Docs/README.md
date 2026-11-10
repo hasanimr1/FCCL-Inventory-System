@@ -35,6 +35,9 @@ These notes were consolidated from older inputs. They are kept for traceability,
 ## Working with these notes
 This pack is meant to be read in Obsidian, so the notes link to each other. Start with [[01-project-overview]] for context, then read [[08-decisions-and-open-issues]] to see what is settled and what is not. The linking conventions used here are explained in [[Obsidian Linking Guide]].
 
+## Project map
+[[Project Map]] is a living, dated audit of the project's artefacts: what the documents claim, what the prototype actually does, and where the two disagree. It is internal — not part of the pack sent to FCCL — and it is updated rather than rewritten. Read it before starting the backend or demoing the prototype.
+
 ## Source and accuracy notes
 This is a categorized consolidation, not a verbatim transcript of every message ever exchanged. It reflects relevant project conversation context and retrieved project files. The current user-confirmed decisions take precedence over older documents and prototype definitions.
 

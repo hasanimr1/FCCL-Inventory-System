@@ -28,7 +28,7 @@ interface StockAndSparesViewProps {
   assets: Asset[];
   selectedPlant: PlantId | 'all';
   onIssueSpare: (stockId: string, quantity: number, assetTag: string, reason: string) => void;
-  onRestockItem: (stockId: string, quantity: number, poNumber: string) => void;
+  onRestockItem: (stockId: string, quantity: number, poNumber: string, newMinThreshold?: number) => void;
   onAddNewStockItem: (newItem: Omit<StockItem, 'id' | 'status' | 'lastRestocked'>) => void;
   onNavigateToVendor: (vendorId: string) => void;
 }
@@ -57,6 +57,7 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
   const [restockModalItem, setRestockModalItem] = useState<StockItem | null>(null);
   const [restockQuantity, setRestockQuantity] = useState(5);
   const [restockPoNumber, setRestockPoNumber] = useState('PO-FCCL-2026-');
+  const [restockNewThreshold, setRestockNewThreshold] = useState(4);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newSku, setNewSku] = useState('SP-');
@@ -107,7 +108,7 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
   const handleConfirmRestock = (e: React.FormEvent) => {
     e.preventDefault();
     if (!restockModalItem) return;
-    onRestockItem(restockModalItem.id, restockQuantity, restockPoNumber);
+    onRestockItem(restockModalItem.id, restockQuantity, restockPoNumber, restockNewThreshold);
     setRestockModalItem(null);
   };
 
@@ -375,6 +376,7 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
                             onClick={() => {
                               setRestockModalItem(item);
                               setRestockQuantity(item.reorderPoint);
+                              setRestockNewThreshold(item.minThreshold);
                             }}
                             className="px-2.5 py-1 text-[11px] font-medium rounded bg-slate-900 text-white hover:bg-slate-800 transition-colors"
                             title="Restock component from vendor"
@@ -514,6 +516,20 @@ export const StockAndSparesView: React.FC<StockAndSparesViewProps> = ({
                   className="flex-1 border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none"
                   required
                 />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-slate-700 font-medium w-36 shrink-0">Min Threshold (Qty)</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={restockNewThreshold}
+                  onChange={(e) => setRestockNewThreshold(Math.max(1, Number(e.target.value)))}
+                  className="flex-1 border border-slate-300 rounded px-3 py-1.5 font-mono focus:outline-none focus:ring-1 focus:ring-slate-800"
+                />
+                <span className="text-[11px] text-slate-400 shrink-0">
+                  Current: {restockModalItem.minThreshold}
+                </span>
               </div>
 
               <div className="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-600">
