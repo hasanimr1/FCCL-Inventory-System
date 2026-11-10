@@ -13,8 +13,11 @@ import {
   Shield,
   Activity,
   Building2,
+  ShoppingBag,
+  Lock,
 } from 'lucide-react';
-import { PlantId } from '../types/inventory.ts';
+import { PlantId, UserRole } from '../types/inventory.ts';
+import { canAccessTab } from '../utils/rbac.ts';
 import fcclLogo from '../Assets/FCCL logo.png';
 
 interface NavigationDrawerProps {
@@ -27,6 +30,7 @@ interface NavigationDrawerProps {
   totalDevicesCount: number;
   onlineDevicesCount: number;
   offlineDevicesCount: number;
+  currentRole?: UserRole;
 }
 
 export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
@@ -39,6 +43,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   totalDevicesCount,
   onlineDevicesCount,
   offlineDevicesCount,
+  currentRole = 'Admin',
 }) => {
   // Close on Escape key
   useEffect(() => {
@@ -80,6 +85,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   ];
 
   const operationsSections = [
+    {
+      id: 'procurement',
+      name: 'Procurement (PR/PO)',
+      subtitle: 'Requisitions, Admin approval & Vendor POs',
+      icon: ShoppingBag,
+    },
     {
       id: 'racks',
       name: 'Server Racks',
@@ -134,7 +145,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
               <div>
                 <h2 className="text-sm font-bold text-white tracking-tight">FCCL Inventory</h2>
-                <p className="text-[11px] text-slate-400 font-mono">Plant Asset Management</p>
+                <p className="text-[11px] text-slate-400 font-mono">Role: {currentRole}</p>
               </div>
             </div>
 
@@ -163,13 +174,13 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
             </div>
           </div>
 
-          {/* Navigation Items (Organized into Clear Groups) */}
+          {/* Navigation Items */}
           <div className="flex-1 overflow-y-auto p-4 space-y-6">
-            {/* Group 1: Important Sections (Always on Top) */}
+            {/* Group 1: Primary Sections */}
             <div>
               <div className="flex items-center justify-between px-2 mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Primary Sections (On Top)
+                  Primary Sections
                 </span>
                 <span className="text-[9px] font-mono text-emerald-400 uppercase bg-emerald-950/60 border border-emerald-800/60 px-1.5 py-0.2 rounded">
                   Quick Access
@@ -179,17 +190,24 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 {coreSections.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
+                  const allowed = canAccessTab(currentRole, item.id);
+
                   return (
                     <button
                       key={item.id}
                       onClick={() => {
-                        onSelectTab(item.id);
-                        onClose();
+                        if (allowed) {
+                          onSelectTab(item.id);
+                          onClose();
+                        }
                       }}
-                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-slate-800 text-white shadow-sm border border-slate-700'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                      disabled={!allowed}
+                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all ${
+                        !allowed
+                          ? 'opacity-40 cursor-not-allowed text-slate-500'
+                          : isActive
+                          ? 'bg-slate-800 text-white shadow-sm border border-slate-700 cursor-pointer'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-800/60 cursor-pointer'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -205,7 +223,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                         <div>
                           <div className="text-xs font-semibold text-white flex items-center gap-2">
                             <span>{item.name}</span>
-                            {item.badge && (
+                            {!allowed && (
+                              <span className="text-[9px] text-amber-400/80 font-mono flex items-center gap-0.5">
+                                <Lock className="w-2.5 h-2.5" /> Restricted
+                              </span>
+                            )}
+                            {item.badge && allowed && (
                               <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700">
                                 {item.badge}
                               </span>
@@ -221,28 +244,35 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
             </div>
 
-            {/* Group 2: Operations & Hardware (Shifted into Drawer) */}
+            {/* Group 2: Operations Sections */}
             <div>
-              <div className="px-2 mb-2">
+              <div className="flex items-center justify-between px-2 mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Operations &amp; Infrastructure
+                  Operations &amp; Procurement
                 </span>
               </div>
               <div className="space-y-1">
                 {operationsSections.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
+                  const allowed = canAccessTab(currentRole, item.id);
+
                   return (
                     <button
                       key={item.id}
                       onClick={() => {
-                        onSelectTab(item.id);
-                        onClose();
+                        if (allowed) {
+                          onSelectTab(item.id);
+                          onClose();
+                        }
                       }}
-                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-slate-800 text-white shadow-sm border border-slate-700'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                      disabled={!allowed}
+                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all ${
+                        !allowed
+                          ? 'opacity-40 cursor-not-allowed text-slate-500'
+                          : isActive
+                          ? 'bg-slate-800 text-white shadow-sm border border-slate-700 cursor-pointer'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-800/60 cursor-pointer'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -256,7 +286,14 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                           <Icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="text-xs font-semibold text-white">{item.name}</div>
+                          <div className="text-xs font-semibold text-white flex items-center gap-2">
+                            <span>{item.name}</span>
+                            {!allowed && (
+                              <span className="text-[9px] text-amber-400/80 font-mono flex items-center gap-0.5">
+                                <Lock className="w-2.5 h-2.5" /> Restricted
+                              </span>
+                            )}
+                          </div>
                           <p className="text-[11px] text-slate-400 line-clamp-1">{item.subtitle}</p>
                         </div>
                       </div>
@@ -267,28 +304,35 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
             </div>
 
-            {/* Group 3: Auditing & Tools */}
+            {/* Group 3: Compliance & Tamper-Evident Audit */}
             <div>
-              <div className="px-2 mb-2">
+              <div className="flex items-center justify-between px-2 mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  Compliance &amp; Utilities
+                  Compliance &amp; Integrity
                 </span>
               </div>
               <div className="space-y-1">
                 {auditSections.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
+                  const allowed = canAccessTab(currentRole, item.id);
+
                   return (
                     <button
                       key={item.id}
                       onClick={() => {
-                        onSelectTab(item.id);
-                        onClose();
+                        if (allowed) {
+                          onSelectTab(item.id);
+                          onClose();
+                        }
                       }}
-                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-slate-800 text-white shadow-sm border border-slate-700'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                      disabled={!allowed}
+                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all ${
+                        !allowed
+                          ? 'opacity-40 cursor-not-allowed text-slate-500'
+                          : isActive
+                          ? 'bg-slate-800 text-white shadow-sm border border-slate-700 cursor-pointer'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-800/60 cursor-pointer'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -302,7 +346,14 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                           <Icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="text-xs font-semibold text-white">{item.name}</div>
+                          <div className="text-xs font-semibold text-white flex items-center gap-2">
+                            <span>{item.name}</span>
+                            {!allowed && (
+                              <span className="text-[9px] text-amber-400/80 font-mono flex items-center gap-0.5">
+                                <Lock className="w-2.5 h-2.5" /> Restricted
+                              </span>
+                            )}
+                          </div>
                           <p className="text-[11px] text-slate-400 line-clamp-1">{item.subtitle}</p>
                         </div>
                       </div>
@@ -310,41 +361,22 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                     </button>
                   );
                 })}
-
-                {/* Direct Scan Tool Button */}
-                <button
-                  onClick={() => {
-                    onClose();
-                    onOpenScannerModal();
-                  }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer text-slate-300 hover:text-white hover:bg-slate-800/60 border border-dashed border-slate-700"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-950/40 text-emerald-400 border border-emerald-800/50 flex items-center justify-center shrink-0">
-                      <QrCode className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-semibold text-white">Physical Barcode Scan</div>
-                      <p className="text-[11px] text-slate-400">Launch camera &amp; barcode audit tool</p>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-emerald-900/40 text-emerald-300 border border-emerald-700/50">
-                    Scan
-                  </span>
-                </button>
               </div>
             </div>
           </div>
 
-          {/* Footer Info */}
-          <div className="p-4 border-t border-slate-800 bg-slate-950/60 text-xs text-slate-400 space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono text-slate-500">Plant Isolation</span>
-              <span className="text-[11px] text-slate-300 font-medium">
-                {selectedPlant === 'all' ? 'All 4 Plants Active' : selectedPlant}
-              </span>
-            </div>
-            <p className="text-[10px] text-slate-500 font-mono">Press Esc to close menu</p>
+          {/* Footer Quick Scan Button */}
+          <div className="p-4 border-t border-slate-800 bg-slate-950/80">
+            <button
+              onClick={() => {
+                onClose();
+                onOpenScannerModal();
+              }}
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
+            >
+              <QrCode className="w-4 h-4" />
+              <span>Launch QR Scanner Walkthrough</span>
+            </button>
           </div>
         </div>
       </aside>

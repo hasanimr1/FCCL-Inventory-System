@@ -4,6 +4,7 @@ import {
   Asset,
   StockItem,
   AssetCategory,
+  PurchaseOrder,
 } from '../types/inventory.ts';
 import { formatPKR, getDeviceNumber } from '../utils/inventoryRules.ts';
 import {
@@ -19,26 +20,32 @@ import {
   Plus,
   ExternalLink,
   Search,
+  FileText,
+  ShoppingBag,
 } from 'lucide-react';
 
 interface SupplierTrackingViewProps {
   vendors: Vendor[];
   assets: Asset[];
   stockItems: StockItem[];
+  purchaseOrders?: PurchaseOrder[];
   selectedVendorId?: string;
   onSelectVendor?: (vendorId: string) => void;
   onAddVendor: (vendor: Omit<Vendor, 'id'>) => void;
   onNavigateToAsset: (assetTag: string) => void;
+  onNavigateToProcurement?: (vendorId?: string) => void;
 }
 
 export const SupplierTrackingView: React.FC<SupplierTrackingViewProps> = ({
   vendors,
   assets,
   stockItems,
+  purchaseOrders = [],
   selectedVendorId,
   onSelectVendor,
   onAddVendor,
   onNavigateToAsset,
+  onNavigateToProcurement,
 }) => {
   const [activeVendorId, setActiveVendorId] = useState<string>(
     selectedVendorId || vendors[0]?.id || ''
@@ -205,13 +212,72 @@ export const SupplierTrackingView: React.FC<SupplierTrackingViewProps> = ({
                   <p className="text-xs text-slate-600 mt-1">{currentVendor.category}</p>
                 </div>
 
-                <div className="text-right sm:text-right">
-                  <span className="text-xs text-slate-500 block">Total Procurement Spend</span>
-                  <span className="text-base font-bold font-mono text-slate-900 tabular-nums">
-                    {formatPKR(currentVendor.totalSpendPKR)}
-                  </span>
+                <div className="text-right sm:text-right flex flex-col items-end gap-2">
+                  <div>
+                    <span className="text-xs text-slate-500 block">Total Procurement Spend</span>
+                    <span className="text-base font-bold font-mono text-slate-900 tabular-nums">
+                      {formatPKR(currentVendor.totalSpendPKR)}
+                    </span>
+                  </div>
+
+                  {onNavigateToProcurement && (
+                    <button
+                      onClick={() => onNavigateToProcurement(currentVendor.id)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#006633] hover:bg-[#00552b] text-white text-xs font-bold rounded-lg shadow-sm transition cursor-pointer"
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5" />
+                      <span>Issue Purchase Order (PO)</span>
+                    </button>
+                  )}
                 </div>
               </div>
+
+              {/* Linked Purchase Orders for Vendor */}
+              {(() => {
+                const vendorPOs = purchaseOrders.filter((po) => po.vendorId === currentVendor.id);
+                if (vendorPOs.length === 0) return null;
+                return (
+                  <div className="p-3 bg-emerald-50/70 border border-emerald-200 rounded-lg text-xs space-y-2">
+                    <div className="font-bold text-emerald-900 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <FileText className="w-4 h-4 text-emerald-700" />
+                        Linked Purchase Orders ({vendorPOs.length})
+                      </span>
+                      {onNavigateToProcurement && (
+                        <button
+                          onClick={() => onNavigateToProcurement(currentVendor.id)}
+                          className="text-[11px] text-emerald-800 underline hover:text-emerald-950 font-semibold cursor-pointer"
+                        >
+                          View All
+                        </button>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {vendorPOs.map((po) => (
+                        <div
+                          key={po.id}
+                          className="p-2 bg-white rounded border border-emerald-200 flex items-center justify-between text-[11px]"
+                        >
+                          <div>
+                            <span className="font-mono font-bold text-slate-900">{po.orderNo}</span>
+                            <span className="text-slate-500 block text-[10px]">{po.date}</span>
+                          </div>
+                          <div className="text-right">
+                            <span className="font-mono font-bold">{formatPKR(po.totalPKR)}</span>
+                            <span
+                              className={`block text-[10px] font-bold ${
+                                po.orderStatus === 'Completed' ? 'text-emerald-700' : 'text-blue-700'
+                              }`}
+                            >
+                              {po.orderStatus}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Vendor Contact & SLA Highlights */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">

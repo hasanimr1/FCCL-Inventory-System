@@ -190,17 +190,115 @@ export interface AuditLog {
   actor: string;
   actorRole: string;
   action: string;
-  entityType: 'Asset' | 'Assignment' | 'StockItem' | 'Rack' | 'Vendor' | 'WorkOrder';
+  entityType: 'Asset' | 'Assignment' | 'StockItem' | 'Rack' | 'Vendor' | 'WorkOrder' | 'PurchaseRequest' | 'PurchaseOrder';
   entityId: string;
   previousHash: string;
   recordHash: string;
   changesSummary: string;
 }
 
-export type UserRole =
-  | 'Super Admin'
-  | 'Plant Admin'
-  | 'Technician'
-  | 'Store Officer'
-  | 'Auditor'
-  | 'Employee';
+export type UserRole = 'Admin' | 'Plant Admin' | 'Employee' | 'Auditor';
+
+export interface UserAccount {
+  id: string;
+  username: string; // Email or Employee ID
+  fullName: string;
+  role: UserRole;
+  plantId: PlantId | 'all';
+  department: string;
+  salt: string;
+  digitHashes: string[]; // 6 elements, sha256 of salt:position:digit
+  failedAttempts: number;
+  lockedUntil?: string; // ISO timestamp
+}
+
+export type PRStatus = 'Pending Approval' | 'Approved' | 'Rejected' | 'Converted to PO';
+export type PRPriority = 'Low' | 'Medium' | 'High' | 'Critical';
+
+export interface PurchaseRequestItem {
+  id: string;
+  description: string;
+  category: AssetCategory;
+  quantity: number;
+  estimatedUnitPricePKR: number;
+  estimatedTotalPKR: number;
+  suggestedModel?: string;
+  notes?: string;
+}
+
+export interface PurchaseRequest {
+  id: string; // e.g. "PR-2026-001"
+  prNumber: string; // e.g. "PR-HTR-2026-001"
+  title: string;
+  department: string;
+  plantId: PlantId;
+  requestedBy: string; // Name & Email
+  requesterRole: UserRole;
+  priority: PRPriority;
+  justification: string;
+  requestedDate: string; // YYYY-MM-DD
+  items: PurchaseRequestItem[];
+  totalEstimatedCostPKR: number;
+  targetVendorId?: string;
+  status: PRStatus;
+  approvalDecision?: {
+    decision: 'Approved' | 'Rejected';
+    decidedBy: string;
+    decidedAt: string;
+    comments?: string;
+  };
+  generatedPoId?: string;
+}
+
+export type POStatus = 'Started' | 'Completed' | 'Delivered' | 'Cancelled';
+
+export interface PurchaseOrderItem {
+  itemNo: number;
+  description: string;
+  category: AssetCategory;
+  qty: number;
+  price: number; // PKR
+  discount: number; // PKR
+  total: number; // (qty * price) - discount
+  suggestedModel?: string;
+}
+
+export interface PurchaseOrder {
+  id: string; // e.g. "po-173123456"
+  orderNo: string; // e.g. "PO-2026-0102"
+  prId: string; // Linked PR
+  date: string; // YYYY-MM-DD
+  // Customer Information (FCCL facility receiving the goods)
+  customerName: string;
+  company: string; // "Fauji Cement Company Limited"
+  phoneNo: string;
+  email: string;
+  address: string;
+  plantId: PlantId;
+  // Vendor Information (Pre-filled from Vendor directory)
+  vendorId: string;
+  vendorName: string;
+  vendorCompany: string;
+  vendorPhone: string;
+  vendorEmail: string;
+  vendorAddress: string;
+  // Order Details
+  items: PurchaseOrderItem[];
+  subtotalPKR: number;
+  taxPKR: number;
+  shippingPKR: number;
+  totalPKR: number;
+  // Order Status
+  orderStatus: POStatus;
+  // Delivery Details
+  deliveryMethod: string;
+  deliveryDate: string;
+  trackingNo: string;
+  dateReceived?: string;
+  // Notes
+  notes: string;
+  // Automatic inventory generation
+  completedAt?: string;
+  completedBy?: string;
+  generatedAssetIds?: string[];
+}
