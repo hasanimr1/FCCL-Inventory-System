@@ -102,7 +102,7 @@
     "activeBackend": "opencode",
     "backends": {
       "opencode": {
-        "defaultMode": "default"
+        "defaultMode": "auto"
       }
     },
     "debugFullFrames": true,

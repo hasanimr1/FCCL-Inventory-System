@@ -327,7 +327,7 @@ Ordered; tick as they land. Do not delete completed items — the history is the
 
 **Then — backend foundation**
 - [ ] Settle §8 items 1–8
-- [ ] Scaffold ASP.NET Core + EF Core with one vertical slice (assets, plant-scoped)
+- [ ] Scaffold ASP.NET Core + EF Core with one vertical slice (assets, plant-scoped) — sequence and exit criteria in [[09-backend-setup-plan]] §4–§5
 - [ ] Replace the mock import with an API client; delete the direct `backend/data` import
 - [ ] Add an audit writer that records actor from the token, not a constant
 
@@ -339,6 +339,7 @@ Newest first. One line per change; link the commit when there is one.
 
 | Date | Change |
 |---|---|
+| 2026-11-13 | [[09-backend-setup-plan]] created (G-1…G-12 gates, WP0–WP9, draft MSSQL schema, API surface, AC mapping). Snapshot §1 is unchanged and now stale in one respect: `backend/` contains an Express prototype (`backend/server.ts`) plus `data/mockInventoryData.ts`, and `frontend/src/utils` gained `authService`, `rbac`, `procurementService` and `sha256`; the SPA still makes no API calls. |
 | 2026-11-06 | Initial audit. Read the full spec, all 17 source files, ran type check, build, tests and a browser pass; created this note and linked it from the README. |
 
 ---

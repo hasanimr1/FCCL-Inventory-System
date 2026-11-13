@@ -11,6 +11,7 @@ This documentation pack consolidates the relevant project discussions and availa
 - [[06-workflows-and-diagrams]] — textual workflows and UML diagram requirements.
 - [[07-backup-deployment-and-recovery]] — backup, recovery and deployment planning.
 - [[08-decisions-and-open-issues]] — current decisions, superseded choices and unresolved items.
+- [[09-backend-setup-plan]] — backend build plan: solution layout, schema, API surface, work packages, gates and acceptance mapping.
 
 ## Source material
 These notes were consolidated from older inputs. They are kept for traceability, not as current requirements:

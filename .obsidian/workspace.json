@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "7c5f9cf120bad8de",
+        "id": "a2d4353bb9493f37",
         "type": "tabs",
         "children": [
           {
-            "id": "57527f989fae9bcf",
+            "id": "69612704e43a7676",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Docs/FCCL_Project_Markdown_Docs/09-backend-setup-plan.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "09-backend-setup-plan"
             }
           }
         ]
@@ -178,8 +182,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 404.699951171875,
-    "collapsed": true
+    "width": 404.699951171875
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -193,23 +196,26 @@
       "copilot:Open Copilot Agent Chat": false
     }
   },
-  "active": "57527f989fae9bcf",
+  "active": "69612704e43a7676",
   "lastOpenFiles": [
+    "Docs/FCCL_Project_Markdown_Docs/09-backend-setup-plan.md",
+    "copilot/copilot-conversations/agent__Create_a_backend_setup_plan_for_this_project_according_to@20261113_123903.md",
+    "Untitled.canvas",
+    "Untitled.base",
+    "Untitled 1.base",
+    "frontend/dist/index.html",
+    "frontend/dist/assets/index-CN708Fb6.js",
+    "frontend/dist/assets/index-DpRNxxNY.css",
+    "frontend/dist/assets/FCCL logo-DQdKTkKA.png",
+    "frontend/dist/assets",
+    "copilot/copilot-conversations/agent__go_through_the_backend_and_frontend_folder_to_see_the@20261110_153003.md",
     "frontend/src/components/PurchaseOrdersView.tsx",
     "frontend/src/components/LoginScreen.tsx",
     "backend/server.ts",
     "frontend/src/utils/procurementService.ts",
-    "frontend/src/utils/rbac.ts",
-    "frontend/src/utils/authService.ts",
-    "frontend/src/utils/sha256.ts",
     "Docs/FCCL_Project_Markdown_Docs/03-roles-and-access-control.md",
     "Docs/Project Map.md",
     "Docs/FCCL_Project_Markdown_Docs/project_summary.md",
-    "frontend/dist/index.html",
-    "frontend/dist/assets/index-mgMZULyI.css",
-    "frontend/dist/assets/index-BTkrbkVj.js",
-    "frontend/dist/assets/FCCL logo-DQdKTkKA.png",
-    "frontend/dist/assets",
     "Docs/FCCL_Project_Markdown_Docs/07-backup-deployment-and-recovery.md",
     "copilot/copilot-conversations/agent__what_can_you_tell_me_about_the_current_vault@20261104_151151.md",
     "Docs/Obsidian Linking Guide.md",
@@ -229,8 +235,6 @@
     "Docs/FCCL_Project_Markdown_Docs/Inital Plan.md",
     "Docs/project_summary.md",
     "Docs/Asset_Management_Requirements_Specification.md",
-    "Docs/FCCL_Project_Markdown_Docs/05-data-model-and-business-rules.md",
-    "Docs/FCCL_Project_Markdown_Docs/08-decisions-and-open-issues.md",
-    "Docs/FCCL_Project_Markdown_Docs/06-workflows-and-diagrams.md"
+    "Docs/FCCL_Project_Markdown_Docs/05-data-model-and-business-rules.md"
   ]
 }

@@ -111,7 +111,7 @@ backend/
     └── FCCL.Inventory.AuthorizationTests/
 ```
 
-This is a proposed organization, not a claim about the current repository.
+This is a proposed organization, not a claim about the current repository. The concrete scaffold commands, package baseline, schema, endpoint surface and work-package sequence are in [[09-backend-setup-plan]].
 
 ## 6. Data consistency principles
 - Use stable backend-generated primary keys.
